@@ -20,6 +20,13 @@ local function log_word()
   end
 end
 
+local function lsp_restart()
+	vim.cmd ':LspStop'
+	vim.defer_fn(function()
+		vim.cmd ':LspStart'
+	end, 500)
+end
+
 vim.keymap.set("n", "<leader>pv", "<cmd>Explore<CR>", { desc = "Explore" })
 vim.keymap.set("n", "<leader><leader>", telescopebuiltin.buffers, { desc = "Buffers list" })
 vim.keymap.set("n", '<leader>lw', log_word, { desc = 'Log word' })
@@ -29,3 +36,22 @@ vim.keymap.set("n", "[g", gs.prev_hunk, { desc= "Prev git hunk" })
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Prev buffer" })
 vim.keymap.set('n', '<leader>ts', "[[:%s/\t/  /g<CR>]", { desc = "Replace tabs with spaces" })
+
+vim.keymap.set('n', '<leader>k', function()
+  local diagnostics = vim.diagnostic.get(vim.api.nvim_get_current_buf())
+  if not vim.tbl_isempty(diagnostics) then
+    vim.diagnostic.open_float(nil, { border = "rounded" })
+  else
+    vim.notify("No diagnostics available in the current buffer.", vim.log.INFO)
+  end
+end, { desc = 'Show Floating Diagnostics' })
+
+vim.keymap.set('n', '<leader>lr', lsp_restart, { desc = "Restart LSP" })
+
+vim.keymap.set('n', '<leader>cp', '<cmd>let @+ = expand("%")<CR>', { desc = '[C]opy file [P]ath' })
+
+vim.api.nvim_set_keymap('n', '<leader>U', ':UndotreeToggle<CR>', {
+	noremap = true,
+	silent = true,
+	desc = 'Toggle Undotree',
+})

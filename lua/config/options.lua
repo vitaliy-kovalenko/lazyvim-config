@@ -17,7 +17,7 @@ vim.opt.list = true -- Enable the display of listchars
 vim.opt.listchars = {
   tab = ' _',       -- Show tabs as '> ' (you might prefer '>-' or similar)
   trail = '-',      -- Show trailing spaces as '-'
-  space = '.',      -- Show spaces as '·' (a middle dot)
+  space = '·',      -- Show spaces as '·' (a middle dot)
   nbsp = '+'        -- Show non-breaking spaces as '+'
 }
 
@@ -32,3 +32,5 @@ vim.opt.colorcolumn = "100,120"
 vim.opt.wrap = true      -- Enable soft wrapping
 vim.opt.linebreak = true -- Break lines at word boundaries for better readability
 -- vim.opt.whichwrap:append("<>[]{}()") -- Allow cursor keys to wrap to the next/previous line when at the end of a line.
+
+vim.opt.shortmess:append("S")
