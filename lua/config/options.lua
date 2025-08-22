@@ -3,13 +3,13 @@
 -- Add any additional options here
 
 -- Set transparent background
-vim.cmd([[
-  highlight Normal guibg=NONE ctermbg=NONE
-  highlight NormalNC guibg=NONE ctermbg=NONE
-  highlight NvimTreeNormal guibg=NONE ctermbg=NONE
-  highlight SignColumn guibg=NONE ctermbg=NONE
-  highlight MsgArea guibg=NONE ctermbg=NONE
-]])
+-- vim.cmd([[
+--   highlight Normal guibg=NONE ctermbg=NONE
+--   highlight NormalNC guibg=NONE ctermbg=NONE
+--   highlight NvimTreeNormal guibg=NONE ctermbg=NONE
+--   highlight SignColumn guibg=NONE ctermbg=NONE
+--   highlight MsgArea guibg=NONE ctermbg=NONE
+-- ]])
 
 vim.g.autoformat = false
 
