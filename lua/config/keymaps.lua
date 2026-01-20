@@ -10,7 +10,7 @@ local function log_word()
 
   if filetype:match 'javascript' or filetype:match 'typescript' or filetype:match 'vue' then
     -- vim.cmd 'normal! yiw'
-    vim.cmd('normal! oconsole.log({ ' .. word .. ' })')
+    vim.cmd('normal! oconsole.log(structuredClone({ ' .. word .. ' }))')
   elseif filetype == 'go' then
     -- vim.cmd 'normal! yiw'
     vim.cmd('normal! olog.Printf("' .. word .. ': %+v", ' .. word .. ')')
@@ -49,6 +49,27 @@ end, { desc = 'Show Floating Diagnostics' })
 vim.keymap.set('n', '<leader>lr', lsp_restart, { desc = "Restart LSP" })
 
 vim.keymap.set('n', '<leader>cp', '<cmd>let @+ = expand("%")<CR>', { desc = '[C]opy file [P]ath' })
+
+local function copy_path_with_lines()
+  local path = vim.fn.expand("%")
+  -- Get current visual selection (works while still in visual mode)
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
+  -- Ensure start is before end (selection could go upward)
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+  local result
+  if start_line == end_line then
+    result = string.format("@%s:%d", path, start_line)
+  else
+    result = string.format("@%s:%d-%d", path, start_line, end_line)
+  end
+  vim.fn.setreg("+", result)
+  vim.notify("Copied: " .. result)
+end
+
+vim.keymap.set('v', '<leader>cp', copy_path_with_lines, { desc = '[C]opy file [P]ath with lines' })
 
 vim.api.nvim_set_keymap('n', '<leader>U', ':UndotreeToggle<CR>', {
 	noremap = true,
