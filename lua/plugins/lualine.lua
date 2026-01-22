@@ -24,7 +24,8 @@ return {
             end
           end,
           cond = function()
-            return vim.v.hlsearch == 1 and vim.fn.searchcount().total > 0
+            local sc = vim.fn.searchcount()
+            return vim.v.hlsearch == 1 and sc.total ~= nil and sc.total > 0
           end,
           color = { gui = "bold", fg = "#E0AF68" }, -- Example color
         },
