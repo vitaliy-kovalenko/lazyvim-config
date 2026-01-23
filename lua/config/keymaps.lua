@@ -21,10 +21,10 @@ local function log_word()
 end
 
 local function lsp_restart()
-	vim.cmd ':LspStop'
-	vim.defer_fn(function()
-		vim.cmd ':LspStart'
-	end, 500)
+  vim.cmd ':LspStop'
+  vim.defer_fn(function()
+    vim.cmd ':LspStart'
+  end, 500)
 end
 
 vim.keymap.set("n", "<leader>pv", "<cmd>Explore<CR>", { desc = "Explore" })
@@ -35,7 +35,13 @@ vim.keymap.set("n", "[g", gs.prev_hunk, { desc= "Prev git hunk" })
 
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Prev buffer" })
-vim.keymap.set('n', '<leader>ts', "[[:%s/\t/  /g<CR>]", { desc = "Replace tabs with spaces" })
+vim.keymap.set('n', '<leader>ts', "<cmd>%s/\t/  /g<CR>", { desc = "Replace tabs with spaces", silent = true })
+vim.keymap.set('n', '<leader>tt', function()
+  local save_expandtab = vim.bo.expandtab
+  vim.bo.expandtab = false
+  vim.cmd('retab!')
+  vim.bo.expandtab = save_expandtab
+end, { desc = "Convert indentation to tabs" })
 
 vim.keymap.set('n', '<leader>k', function()
   local diagnostics = vim.diagnostic.get(vim.api.nvim_get_current_buf())
@@ -72,7 +78,7 @@ end
 vim.keymap.set('v', '<leader>cp', copy_path_with_lines, { desc = '[C]opy file [P]ath with lines' })
 
 vim.api.nvim_set_keymap('n', '<leader>U', ':UndotreeToggle<CR>', {
-	noremap = true,
-	silent = true,
-	desc = 'Toggle Undotree',
+  noremap = true,
+  silent = true,
+  desc = 'Toggle Undotree',
 })
