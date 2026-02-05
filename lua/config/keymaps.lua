@@ -54,7 +54,7 @@ end, { desc = 'Show Floating Diagnostics' })
 
 vim.keymap.set('n', '<leader>lr', lsp_restart, { desc = "Restart LSP" })
 
-vim.keymap.set('n', '<leader>cp', '<cmd>let @+ = expand("%")<CR>', { desc = '[C]opy file [P]ath' })
+vim.keymap.set('n', '<leader>cp', '<cmd>let @+ = expand("%:.")<CR>', { desc = '[C]opy file [P]ath' })
 
 local function copy_path_with_lines()
   local path = vim.fn.expand("%")
